@@ -1,0 +1,14 @@
+# This file tracks which files git should never track.
+
+.venv
+venv/
+.env
+__pyache__/
+node_modules/
+dist/
+.env.*
+*.pyc
+db.sqlite3
+.vscode/
+.DS_Strore
+Thumbs.db
