@@ -3,12 +3,13 @@
 .venv
 venv/
 .env
-__pyache__/
+__pycache__/
 node_modules/
 dist/
 .env.*
+!.env.example
 *.pyc
 db.sqlite3
 .vscode/
-.DS_Strore
+.DS_Store
 Thumbs.db
