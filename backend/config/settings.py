@@ -39,11 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',
+    # Kazi Connect modules (SDD section 4)
+    'core',
+    'accounts',
+    'listings',
+    'jobs',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware', #Must come before CommonMiddleware.
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -119,3 +127,44 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Supabase Auth - the browser signs in with Supabase and sends us its access token.
+# We verify the token with Supabase's public signing keys (JWKS), so no Supabase secret is needed here.
+SUPABASE_URL = env("SUPABASE_URL").rstrip("/")
+SUPABASE_JWT_ISSUER = f"{SUPABASE_URL}/auth/v1"
+SUPABASE_JWT_AUDIENCE = "authenticated"
+SUPABASE_JWKS_URL = f"{SUPABASE_JWT_ISSUER}/.well-known/jwks.json"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ['accounts.authentication.SupabaseJWTAuthentication'],
+    # Every endpoint needs a signed-in user unless the view says otherwise (SR-NF-SEC-02).
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_THROTTLE_RATES': {
+        'otp': '5/hour',           # SR-F-ACC-03, SR-NF-SEC-08
+        'student_email': '5/hour',
+    },
+    'EXCEPTION_HANDLER': 'core.exceptions.api_exception_handler',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,  # SR-F-SRC-06
+}
+
+# The React app runs on a different origin, so the API must allow it explicitly.
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=["http://localhost:5173"])
+
+# Used to build links in emails, e.g. the student email verification link.
+FRONTEND_URL = env("FRONTEND_URL", default="http://localhost:5173").rstrip("/")
+
+# Email - printed to the console in development (SR-F-NTF-01 needs a real SMTP service later).
+EMAIL_BACKEND = env("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Kazi Connect <no-reply@kaziconnect.local>")
+
+# SMS - only used for phone verification codes. The console backend prints codes to the runserver terminal.
+SMS_BACKEND = env("SMS_BACKEND", default="accounts.sms.ConsoleSMSBackend")
+
+# Versions of the legal texts users accept. Bump a version when its text changes.
+LEGAL_DOCUMENT_VERSIONS = {
+    "terms": "draft-2026-11",
+    "privacy": "draft-2026-11",
+    "code_of_conduct": "draft-2026-11",
+}

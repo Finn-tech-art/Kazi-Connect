@@ -82,6 +82,7 @@ The Django application is divided into modules with explicit business responsibi
 | Accounts and access | Registration, sign-in, verification, roles, sessions, provider upgrade | ACC requirements |
 | Profiles and verification | Client/provider profiles, student status, badge applications, document decisions | Profile and verification requirements |
 | Categories and listings | Categories, price guidance, service listings, search criteria | Listing and search requirements |
+| Job requests | Client job posts and the provider job board (change request CR-01, not in SRS v1.0) | CR-01 in the [database design](./Kazi_Connect_Database_Design.md), section 11 |
 | Bookings | Booking lifecycle, state transitions, cancellation, confirmation | Booking requirements and lifecycle |
 | Payments and ledger | Daraja payments, provider payouts, refunds, commissions, immutable money movements | Payment and ledger requirements |
 | Messaging | Conversations, messages, reporting, rate limits, access checks | Chat and safety requirements |
@@ -139,7 +140,7 @@ The following entities come from the SRS data requirements. The relationships be
 | Audit log | At least 12 months |
 | Account data after a deletion request | Deleted or anonymized within 30 days, except financial records |
 
-The complete schema, indexes, uniqueness rules, and deletion/anonymization behavior remain to be detailed and verified against the SRS.
+The complete schema, indexes, uniqueness rules, and deletion/anonymization behavior are detailed in the [database design document](./Kazi_Connect_Database_Design.md). Class, sequence, and state diagrams are in the [OOAD diagrams document](./Kazi_Connect_OOAD_Diagrams.md).
 
 ## 6. Key interaction and data-flow rules
 
@@ -254,6 +255,8 @@ Platform references: Railway [Services](https://docs.railway.com/services), [Dep
 | D-04 | Which worker/queue and scheduler will run auto-release, retries, reverification reminders, and retention jobs? | Railway Cron is suitable only for periodic, short, recoverable sweeps; the task queue and durable execution design remain to be chosen. |
 | D-05 | Confirm the Cloudflare Pages + Railway hybrid, decide whether any Cloudflare Worker is needed, and select regions/environment plans. | Needed to validate frontend/API routing, networking, secrets, scaling, monitoring, backups, recovery, and service limits against the SRS. |
 | D-06 | Can customized Django Admin meet every SRS admin-console workflow, including dashboards, queues, evidence review, audit, and CSV export? | A mismatch may require custom Django views or a separate admin UI. |
+| D-07 | Use PostGIS (available on Supabase) for location search? | Decides how listing locations are stored and how "service area covers the client" (SR-F-SRC-04) is queried within the 2-second target. |
+| D-08 | Approve change request CR-01 (client job posts) and decide how a provider responds to a post. | The job board is built in the MVP but is not in SRS v1.0; the SRS needs updating, and responses must lead into the protected booking flow. |
 
 ## 10. Next sections to design
 
