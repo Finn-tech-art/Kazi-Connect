@@ -41,11 +41,17 @@
 .side-toggle.dark button { color: rgb(255 255 255 / 0.75); }
 .side-toggle.dark button.on { background: #fff; color: #121214; }
 
-.mk-facts { padding: 40px 0 8px; }
-.mk-facts-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
-.mk-fact { display: flex; flex-direction: column; gap: 4px; padding: 18px 20px; border-left: 3px solid var(--accent); background: var(--bg-surface); border-radius: 0 var(--radius) var(--radius) 0; }
-.mk-fact b { font-size: 24px; line-height: 32px; font-weight: 700; letter-spacing: -0.5px; }
-.mk-fact span { color: var(--text-secondary); }
+/* Logo row under the hero */
+.mk-brands { padding: 40px 0 8px; }
+.mk-brands-row { display: flex; justify-content: center; align-items: center; gap: clamp(24px, 6vw, 72px); margin-top: 24px; }
+.mk-brands figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 0 1 auto; min-width: 0; }
+.mk-brands figure + figure { padding-left: clamp(24px, 6vw, 72px); border-left: 1px solid var(--border); }
+.mk-brands figcaption { color: var(--text-muted); font-size: 12px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; }
+.mk-brands img { display: block; }
+.mk-brands figcaption, .mk-brand-kazi > span { white-space: nowrap; }
+.mk-brand-kazi { height: 64px; font-size: 26px; gap: 10px; }
+.mk-brand-mmu { height: 64px; width: auto; }
+.mk-brand-mpesa { height: 64px; width: auto; }
 
 .mk-section { padding: clamp(56px, 8vw, 96px) 0 0; }
 .mk-section-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
@@ -75,7 +81,7 @@
 .mk-step-media { aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden; background: var(--bg-elevated); }
 .mk-step-media img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .mk-step-media.phone { background: linear-gradient(160deg, var(--accent-subtle), #fde6ad); display: flex; justify-content: center; }
-.mk-step-media.phone img { width: 62%; height: auto; object-fit: initial; margin-top: 7%; filter: drop-shadow(0 12px 18px rgb(18 18 20 / 0.18)); }
+.mk-step-media.phone img { width: 62%; height: auto; align-self: flex-start; object-fit: initial; margin-top: 7%; filter: drop-shadow(0 12px 18px rgb(18 18 20 / 0.18)); }
 
 /* Two-column feature rows */
 .mk-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; margin-top: clamp(56px, 8vw, 96px); }
@@ -176,7 +182,6 @@
 .booking-safety { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; }
 
 @media (max-width: 899.98px) {
-  .mk-facts-row { grid-template-columns: repeat(2, 1fr); }
   .mk-category, .mk-split, .mk-faq-section, .mk-showcase, .info-grid { grid-template-columns: 1fr; }
   .mk-category-media { min-height: 0; aspect-ratio: 16 / 9; }
   .mk-steps, .mk-trust { grid-template-columns: 1fr; }
@@ -193,7 +198,13 @@
   .mk-hero { min-height: 560px; }
   .mk-hero-shade { background: linear-gradient(0deg, rgb(18 18 20 / 0.92) 10%, rgb(18 18 20 / 0.45) 70%, rgb(18 18 20 / 0.25)); }
   .mk-hero .actions .btn { flex: 1 1 100%; }
-  .mk-facts-row { grid-template-columns: 1fr; }
+  .mk-brands-row { gap: 12px; }
+  .mk-brands figure + figure { padding-left: 12px; }
+  .mk-brand-kazi { height: 40px; font-size: 15px; gap: 5px; }
+  .mk-brand-kazi img { width: 24px; height: 24px; }
+  .mk-brand-mmu { height: 40px; }
+  .mk-brand-mpesa { height: 34px; margin: 3px 0; }
+  .mk-brands figcaption { font-size: 10px; }
   .mk-tabs { justify-content: flex-start; }
   .mk-tabs button { padding: 8px 12px 14px; }
   .mk-photo-stack { min-height: 300px; }

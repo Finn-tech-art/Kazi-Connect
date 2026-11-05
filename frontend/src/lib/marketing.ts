@@ -39,7 +39,7 @@ export const STEPS: Record<Side, Step[]> = {
     { title: 'Pay when the work is done', body: 'Pay by M-Pesa after the provider accepts. We hold the money and release it only when you confirm the job is done.', media: '/showcase/phone-booking-accepted.png', tone: 'phone' },
   ],
   work: [
-    { title: 'Verify and set up', body: 'Confirm your email and phone, add an M-Pesa payout number, and verify your MMU student email for the lower Student commission.', media: '/media/repair.jpg', tone: 'photo' },
+    { title: 'Verify and set up', body: 'Confirm your email and phone, add an M-Pesa payout number, and verify your MMU student email for the lower Student commission.', media: '/showcase/phone-provider-setup.png', tone: 'phone' },
     { title: 'List services or find jobs', body: 'Publish listings at your own price, with an estimate to guide you, and browse the job board for open requests.', media: '/showcase/phone-job-board.png', tone: 'phone' },
     { title: 'Get paid after you deliver', body: 'Accept requests, do the job and mark it delivered. You are paid once the client confirms, or automatically after 48 hours.', media: '/showcase/phone-provider-request.png', tone: 'phone' },
   ],

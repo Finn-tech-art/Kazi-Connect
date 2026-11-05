@@ -22,13 +22,6 @@ const HERO_CLIPS = ['hero-hire', 'hero-cleaning', 'hero-work', 'hero-office', 'c
   src: `/media/${name}.mp4`, poster: `/media/${name}.jpg`,
 }))
 
-const FACTS = [
-  { value: 'M-Pesa', label: 'Payment held until you confirm the job' },
-  { value: '48 h', label: 'Then funds release automatically if there is no dispute' },
-  { value: '24 h', label: 'For a provider to answer your request' },
-  { value: '12 months', label: 'Student status is reverified every year' },
-]
-
 export default function Landing() {
   const { account } = useAuth()
   const loaded = useCategories()
@@ -69,13 +62,22 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Facts strip: real platform rules, not marketing numbers */}
-      <section className="mk-facts" aria-label="How Kazi Connect protects you">
+      {/* Who it's for and how it pays */}
+      <section className="mk-brands" aria-label="Kazi Connect, launching with Multimedia University of Kenya, payments by M-Pesa">
         <p className="mk-kicker">Launching with the Multimedia University of Kenya community</p>
-        <div className="mk-facts-row">
-          {FACTS.map((fact) => (
-            <div key={fact.value} className="mk-fact"><b>{fact.value}</b><span>{fact.label}</span></div>
-          ))}
+        <div className="mk-brands-row">
+          <figure>
+            <span className="logo mk-brand-kazi"><img src="/kazi-mark.svg" alt="" width={40} height={40} /><span>kazi <b>connect</b></span></span>
+            <figcaption>Marketplace</figcaption>
+          </figure>
+          <figure>
+            <img src="/brand/mmu.png" alt="Multimedia University of Kenya" className="mk-brand-mmu" />
+            <figcaption>Campus</figcaption>
+          </figure>
+          <figure>
+            <img src="/brand/mpesa.svg" alt="M-Pesa" className="mk-brand-mpesa" />
+            <figcaption>Payments</figcaption>
+          </figure>
         </div>
       </section>
 
