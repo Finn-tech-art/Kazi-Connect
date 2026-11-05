@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './auth/AuthProvider'
 import { RequireActiveAccount, RequireActiveProvider, RequireSession } from './auth/guards'
 import { Layout } from './components/Layout'
+import { ScrollToTop } from './components/ScrollToTop'
 import { supabaseConfigured } from './lib/supabase'
 import AccountPage from './pages/AccountPage'
 import BecomeProvider from './pages/BecomeProvider'
@@ -29,6 +30,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         {!supabaseConfigured && (
           <div className="setup-banner" role="alert">
             Supabase isn't configured. Copy <code>frontend/.env.example</code> to <code>.env.local</code>, add the publishable key, and restart <code>npm run dev</code>.
