@@ -8,7 +8,7 @@ const JOURNEY: Record<Side, { title: string; body: string }[]> = {
     { title: 'Create your account', body: 'Sign up with your email and phone number and verify both. No documents are needed to hire.' },
     { title: 'Find a provider or post a job', body: 'Browse listings by category, or post a job with your budget and let providers see it on the job board.' },
     { title: 'Send a booking request', body: "Choose a date, time, length and place, and add notes. Accept the category's job rules and the provider's terms. Nothing is charged yet." },
-    { title: 'Pay by M-Pesa', body: 'When the provider accepts (they have 24 hours), you have 2 hours to pay the full price by M-Pesa. Kazi Connect holds the money.' },
+    { title: 'Pay by M-Pesa', body: 'When the provider accepts (they have 24 hours), you have 2 hours to pay the full price by M-Pesa. The funds are held in escrow.' },
     { title: 'Confirm the work', body: 'The provider marks the job delivered. Confirm it, or raise a dispute within 48 hours if something is wrong.' },
     { title: 'Leave a review', body: 'Once the payment is released, you and the provider can review each other for 14 days.' },
   ],

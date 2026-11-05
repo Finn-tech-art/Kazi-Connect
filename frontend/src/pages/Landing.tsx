@@ -9,7 +9,7 @@ import { CATEGORY_MEDIA, FALLBACK_CATEGORIES, FALLBACK_MEDIA, FAQ, STEPS, type S
 const HERO: Record<Side, { title: string; lead: string }> = {
   hire: {
     title: 'Hire verified students. Pay only when the job is done.',
-    lead: 'Tutors, cleaners, photographers and designers near MMU. Kazi Connect holds your M-Pesa payment until you confirm the work is done.',
+    lead: 'Tutors, cleaners, photographers and designers near MMU. Your M-Pesa payment is held in escrow and released only once you confirm the work is complete.',
   },
   work: {
     title: 'Offer your services to clients near campus.',
@@ -96,7 +96,7 @@ export default function Landing() {
             <h3 className="mk-subtitle">{category.name}</h3>
             <p className="muted mk-body">{category.description}</p>
             <div className="mk-rules">
-              <p className="mk-rules-head"><Icon name="shield" size={18} /> Job rules both sides accept</p>
+              <p className="mk-rules-head"><Icon name="shield" size={18} /> Job rules</p>
               <ul>{category.job_rules.split('\n').map((rule) => <li key={rule}>{rule}</li>)}</ul>
             </div>
             <div className="actions">
@@ -150,22 +150,22 @@ export default function Landing() {
       {/* Trust */}
       <section className="mk-section">
         <h2 className="mk-title center">Why book through Kazi Connect</h2>
-        <p className="lead center mk-center-lead">A WhatsApp group or a friend's referral can't check who someone is, hold your money, or show you their past work.</p>
+        <p className="lead center mk-center-lead">A WhatsApp group or a friend's referral cannot verify identity, secure your payment in escrow, or show a provider's track record.</p>
         <div className="mk-trust">
           <div className="mk-trust-card">
             <span className="mk-icon"><Icon name="user" /></span>
             <h3>Verified people</h3>
-            <p className="muted">Every account confirms an email and phone. Students prove their status with an MMU email, renewed every year. An optional verified badge adds a manual ID check.</p>
+            <p className="muted">Every account confirms an email address and phone number. Students verify their status annually with an MMU email, and an optional verified badge adds a manual ID check.</p>
           </div>
           <div className="mk-trust-card">
             <span className="mk-icon"><Icon name="wallet" /></span>
-            <h3>Protected payment</h3>
-            <p className="muted">You pay by M-Pesa before the job and the money is held. The provider is paid when you confirm, and disputes freeze the funds until an admin decides.</p>
+            <h3>Escrow payments</h3>
+            <p className="muted">You pay by M-Pesa before the job begins, and the funds are held in escrow. The provider is paid once you confirm completion. If a dispute is raised, the funds stay in escrow until an admin rules on it.</p>
           </div>
           <div className="mk-trust-card">
             <span className="mk-icon"><Icon name="star" /></span>
             <h3>Reviews from real jobs</h3>
-            <p className="muted">Only paid, completed jobs can be reviewed, and by both sides. Ratings and job counts set each provider's experience level.</p>
+            <p className="muted">Only paid, completed bookings can be reviewed, and both parties review each other. Ratings and job history determine each provider's experience level.</p>
           </div>
         </div>
         <div className="mk-showcase">
@@ -212,7 +212,7 @@ export default function Landing() {
             <p className="mk-plan-price">Free <small>to join and post jobs</small></p>
             <CheckList>{[
               'Pay only the job price you agreed',
-              'Payment held until you confirm the work',
+              'Payment held in escrow until you approve the work',
               'Free cancellation before you pay',
               'Disputes reviewed by a Kazi Connect admin',
             ]}</CheckList>

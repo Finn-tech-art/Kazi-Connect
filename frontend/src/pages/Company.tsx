@@ -13,7 +13,7 @@ export function About() {
       </p>
       <div className="cards three">
         <div className="card"><h3>Verified people</h3><p className="muted">Every account confirms an email and phone. Students verify their MMU email every year.</p></div>
-        <div className="card"><h3>Protected payment</h3><p className="muted">Clients pay by M-Pesa up front. Providers are paid once the client confirms the job is done.</p></div>
+        <div className="card"><h3>Escrow payments</h3><p className="muted">Clients pay by M-Pesa up front, and the funds are held in escrow. Providers are paid once the client confirms the work is complete.</p></div>
         <div className="card"><h3>Real reviews</h3><p className="muted">Only paid, completed jobs can be reviewed, by both sides.</p></div>
       </div>
     </main>

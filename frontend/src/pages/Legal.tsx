@@ -42,7 +42,7 @@ export function Privacy() {
         <h2>Why we use it</h2>
         <ul>
           <li>To create and verify your account and confirm student status.</li>
-          <li>To run bookings, take payments by M-Pesa, hold them and pay providers.</li>
+          <li>To run bookings, take payments by M-Pesa, hold them in escrow and pay providers.</li>
           <li>To show reviews and experience levels, and rank search results.</li>
           <li>To resolve disputes and reports, and keep the platform safe.</li>
           <li>To send you emails about your account and bookings.</li>
@@ -104,14 +104,14 @@ export function Terms() {
       <section>
         <h2>4. Payment</h2>
         <ul>
-          <li>The client pays the full price by M-Pesa before the job. Kazi Connect holds it until the provider marks the job delivered and the client confirms.</li>
+          <li>The client pays the full price by M-Pesa before the job. Kazi Connect holds the funds in escrow until the provider marks the job delivered and the client confirms.</li>
           <li>If the client neither confirms nor disputes within 48 hours of delivery, the payment is released to the provider.</li>
           <li>We keep a commission set by admins. The Student rate is lower than the General rate. Each booking uses the rate in force when the client pays.</li>
         </ul>
       </section>
       <section>
         <h2>5. Disputes</h2>
-        <p>Either side may raise a dispute between payment and release. This freezes the payment until an admin decides on a release, a refund or a split. Each side may appeal once within 7 days, and a different admin's decision on appeal is final.</p>
+        <p>Either side may raise a dispute between payment and release. The payment then remains in escrow until an admin decides on a release, a refund or a split. Each side may appeal once within 7 days, and a different admin's decision on appeal is final.</p>
       </section>
       <section>
         <h2>6. Reviews</h2>

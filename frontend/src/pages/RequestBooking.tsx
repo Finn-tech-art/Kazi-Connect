@@ -110,7 +110,7 @@ export default function RequestBooking() {
         <div className="payout">
           <span>Total{perJob ? '' : ` for ${quantity} ${quantityNoun(listing.pricing_unit)}`}</span>
           <b className="mono">{formatKES(listing.price * quantity)}</b>
-          <small>Nothing is charged now. You pay by M-Pesa after the provider accepts, and the money is held until the job is done.</small>
+          <small>Nothing is charged now. You pay by M-Pesa once the provider accepts, and the funds are held in escrow until the job is complete.</small>
         </div>
 
         {error && !Object.keys(fields).length && <Alert tone="error">{error.message}</Alert>}

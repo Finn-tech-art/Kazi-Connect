@@ -44,8 +44,8 @@ export default function Safety() {
           </div>
           <div className="mk-trust-card">
             <span className="mk-icon"><Icon name="wallet" /></span>
-            <h3>Protected money</h3>
-            <p className="muted">Payment is held until the client confirms. A dispute freezes the money until an admin decides, and every movement is recorded in a ledger that can't be edited.</p>
+            <h3>Escrow protection</h3>
+            <p className="muted">Payments are held in escrow until the client confirms the work. A dispute keeps the funds in escrow until an admin rules on it, and every transaction is recorded in a ledger that cannot be altered.</p>
           </div>
         </div>
       </section>
@@ -97,7 +97,7 @@ export default function Safety() {
         <div className="stack">
           <div className="card">
             <h3>Raise a dispute</h3>
-            <p className="muted">From payment until release, either side can raise a dispute with a reason and evidence. The money is frozen, the other side has 48 hours to respond, and an admin decides. You can appeal once within 7 days, and a different admin reviews it.</p>
+            <p className="muted">From payment until release, either side can raise a dispute with a reason and evidence. The funds remain in escrow, the other party has 48 hours to respond, and an admin rules on the case. You can appeal once within 7 days, and a different admin reviews it.</p>
           </div>
           <div className="card">
             <h3>Report a person, listing, message or review</h3>

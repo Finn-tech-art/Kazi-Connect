@@ -12,7 +12,7 @@ export function Footer() {
         <div className="footer-brand">
           <Logo />
           <p className="muted">
-            Hire verified students and local pros near MMU. Your M-Pesa payment is held until you confirm the job is done.
+            Hire verified students and local professionals near MMU, with every M-Pesa payment held in escrow until the work is confirmed.
           </p>
           <Link to="/signup" className="btn btn-primary">Join Kazi Connect</Link>
         </div>

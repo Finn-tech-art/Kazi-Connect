@@ -36,7 +36,7 @@ export const STEPS: Record<Side, Step[]> = {
   hire: [
     { title: 'Find someone near campus', body: 'Browse verified students and local pros by category, or post a job for free and let providers find it on the job board.', media: '/showcase/phone-find-services.png', tone: 'phone' },
     { title: 'Book with clear rules', body: "Pick a time and place. You and the provider both accept the category's job rules before anything is confirmed.", media: '/showcase/phone-request-booking.png', tone: 'phone' },
-    { title: 'Pay when the work is done', body: 'Pay by M-Pesa once the provider accepts. We hold the money and release it when you confirm the job is done.', media: '/showcase/phone-booking-accepted.png', tone: 'phone' },
+    { title: 'Pay when the work is done', body: 'Pay by M-Pesa once the provider accepts. The funds are held in escrow and released when you confirm the job is complete.', media: '/showcase/phone-booking-accepted.png', tone: 'phone' },
   ],
   work: [
     { title: 'Verify and set up', body: 'Confirm your email and phone, add an M-Pesa payout number, and verify your MMU student email for the lower Student commission.', media: '/showcase/phone-provider-setup.png', tone: 'phone' },
@@ -61,7 +61,7 @@ export const FAQ: FaqGroup[] = [
     title: 'Bookings and payment',
     items: [
       { q: 'When do I pay?', a: 'After the provider accepts your request. You then have 2 hours to pay the full price with M-Pesa, or the booking is cancelled. Nothing is charged when you send a request.' },
-      { q: 'Who holds the money?', a: 'Kazi Connect holds your payment until the provider marks the job delivered and you confirm it. If you neither confirm nor raise a dispute within 48 hours of delivery, the payment is released to the provider.' },
+      { q: 'How does escrow work?', a: 'Your payment is held in escrow from the moment you pay until the provider marks the job delivered and you confirm it. If you neither confirm nor raise a dispute within 48 hours of delivery, the funds are released to the provider.' },
       { q: 'What if the provider does not answer?', a: 'Providers have 24 hours to accept or decline. A request with no answer expires and you are not charged.' },
       { q: 'Can I cancel?', a: 'Either side can cancel before payment at no cost. If you cancel a paid booking more than 24 hours before the start, you get a full refund. Cancelling within 24 hours of the start may carry a late cancellation fee set for the category.' },
     ],
@@ -78,7 +78,7 @@ export const FAQ: FaqGroup[] = [
   {
     title: 'Trust and safety',
     items: [
-      { q: 'What if something goes wrong with a job?', a: 'Either side can raise a dispute from payment until release. The money is frozen, the other side can respond within 48 hours, and an admin decides: release, refund or a split. Each side can appeal once within 7 days.' },
+      { q: 'What if something goes wrong with a job?', a: 'Either side can raise a dispute from payment until release. The funds remain in escrow, the other party has 48 hours to respond, and an admin rules on a release, a refund or a split. Each side can appeal once within 7 days.' },
       { q: 'How do reviews work?', a: 'Only the client who paid for a completed booking can review the provider, and only that provider can rate the client. Reviews open after the payment is released and stay open for 14 days.' },
       { q: 'What is the verified badge?', a: 'An optional badge for users who pay a small fee and submit their national ID (and student ID for Student accounts) for manual review. It lasts 12 months and helps you appear higher in search.' },
       { q: 'Can I arrange a job outside the app?', a: "You can, but jobs arranged outside Kazi Connect have no payment protection, no dispute support and can't be reviewed." },

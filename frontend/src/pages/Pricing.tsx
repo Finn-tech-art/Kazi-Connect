@@ -18,7 +18,7 @@ export default function Pricing() {
             'Signing up and posting jobs is free',
             'You pay the price shown on the booking, nothing on top',
             'Pay by M-Pesa only after the provider accepts',
-            'Money held until you confirm the work',
+            'Funds held in escrow until you approve the work',
           ]}</CheckList>
         </div>
         <div className="mk-plan featured">
@@ -44,7 +44,7 @@ export default function Pricing() {
         </div>
         <ol className="money-flow">
           <li><b>Client pays</b><span className="money">KES 1,000</span><small>By M-Pesa, after the tutor accepts</small></li>
-          <li><b>Kazi Connect holds it</b><span className="money">KES 1,000</span><small>Until the client confirms, or 48 h after delivery</small></li>
+          <li><b>Held in escrow</b><span className="money">KES 1,000</span><small>Until the client confirms, or 48 h after delivery</small></li>
           <li><b>Tutor receives</b><span className="money">KES 1,000 − commission</span><small>To their verified M-Pesa payout number</small></li>
         </ol>
       </section>
