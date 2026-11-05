@@ -1,12 +1,14 @@
 from unittest import mock
 
 from django.core import mail
+from django.test import override_settings
 
 from accounts.models import Account, StudentVerification, UniversityDomain
 from core.testing import KaziAPITestCase
 from listings.models import ServiceCategory
 
 
+@override_settings(PHONE_VERIFICATION_ENABLED=True)  # covers the SMS payout step; the no-SMS step is in test_registration
 @mock.patch("accounts.services.send_sms")
 class ProviderUpgradeTests(KaziAPITestCase):
     def setUp(self):

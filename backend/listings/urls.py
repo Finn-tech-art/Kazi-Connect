@@ -9,5 +9,6 @@ router.register("provider/listings", views.ProviderListingViewSet, basename="pro
 urlpatterns = [
     path("categories/", views.CategoryListView.as_view(), name="categories"),
     path("listings/", views.PublicListingListView.as_view(), name="listings"),
+    path("listings/<int:pk>/", views.PublicListingDetailView.as_view(), name="listing-detail"),
     *router.urls,
 ]

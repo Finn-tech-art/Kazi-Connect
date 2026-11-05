@@ -3,7 +3,6 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from accounts.models import Account, ProviderProfile
 from accounts.permissions import HasProviderProfile
 
 from . import services
@@ -64,14 +63,17 @@ class PublicListingListView(generics.ListAPIView):
     serializer_class = PublicListingSerializer
 
     def get_queryset(self):
-        listings = (
-            Listing.objects.filter(
-                status=Listing.Status.PUBLISHED,
-                provider__status=ProviderProfile.Status.ACTIVE,
-                provider__account__status=Account.Status.ACTIVE,
-            )
-            .select_related("category", "provider__account")
-            .order_by("-published_at")
-        )
+        listings = services.public_listings().select_related("category", "provider__account").order_by("-published_at")
         category = self.request.query_params.get("category")
         return listings.filter(category__slug=category) if category else listings
+
+
+class PublicListingDetailView(generics.RetrieveAPIView):
+    """One published listing, for the booking request page."""
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
+    serializer_class = PublicListingSerializer
+
+    def get_queryset(self):
+        return services.public_listings().select_related("category", "provider__account")

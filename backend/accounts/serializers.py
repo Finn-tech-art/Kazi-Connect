@@ -72,6 +72,7 @@ class AccountSerializer(serializers.ModelSerializer):
     """Everything the app needs about the signed-in user, returned by every account action."""
 
     phone_verified = serializers.SerializerMethodField()
+    phone_verification_enabled = serializers.SerializerMethodField()
     student_verification = serializers.SerializerMethodField()
     provider = serializers.SerializerMethodField()
     commission_percent = serializers.SerializerMethodField()
@@ -79,12 +80,16 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = [
-            "id", "full_name", "email", "phone", "phone_verified", "category", "status",
+            "id", "full_name", "email", "phone", "phone_verified", "phone_verification_enabled", "category", "status",
             "active_mode", "created_at", "student_verification", "provider", "commission_percent",
         ]
 
     def get_phone_verified(self, account):
         return account.phone_verified_at is not None
+
+    def get_phone_verification_enabled(self, account):
+        """Tells the app whether to ask for SMS codes (system evolution E-02)."""
+        return services.phone_verification_enabled()
 
     def get_student_verification(self, account):
         verification = services.current_student_verification(account)

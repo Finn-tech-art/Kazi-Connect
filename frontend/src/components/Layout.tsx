@@ -1,9 +1,18 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
+import { useCategories } from '../lib/categories'
 import { initials } from '../lib/format'
+import { BackgroundLines } from './BackgroundLines'
+import { Footer } from './Footer'
 import { Icon } from './icons'
+import { Logo } from './Logo'
+import { NavMenu } from './NavMenu'
 import { Sidebar } from './Sidebar'
+import { siteNav } from './siteNav'
+
+// Sign-in and sign-up are kept plain: no footer and no background line art.
+const PLAIN_PAGES = ['/signin', '/signup']
 
 const COLLAPSED_KEY = 'kazi.sidebarCollapsed'
 
@@ -24,21 +33,14 @@ function saveCollapsed(collapsed: boolean) {
   }
 }
 
-function Logo() {
-  return (
-    <Link to="/" className="logo" aria-label="Kazi Connect home">
-      <img src="/kazi-mark.svg" alt="" width={32} height={32} />
-      <span>kazi <b>connect</b></span>
-    </Link>
-  )
-}
-
 export function Layout() {
   const { account, session } = useAuth()
   const location = useLocation()
   const [collapsed, setCollapsed] = useState(readCollapsed)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const navGroups = siteNav(useCategories())
   const signedIn = account?.status === 'active' ? account : null
+  const plain = PLAIN_PAGES.includes(location.pathname)
 
   // Close the mobile drawer whenever the user moves to another page.
   useEffect(() => setDrawerOpen(false), [location.pathname])
@@ -59,6 +61,7 @@ export function Layout() {
 
   return (
     <>
+      {!plain && <BackgroundLines />}
       <header className="topbar">
         {signedIn && (
           <button
@@ -73,11 +76,13 @@ export function Layout() {
           </button>
         )}
         <Logo />
-        {!signedIn && (
-          <nav className="nav" aria-label="Main">
-            <NavLink to="/find">Find services</NavLink>
-          </nav>
+        {signedIn && (
+          // On phones the sidebar (and its mode switch) is hidden, but the mode must show on every page (SR-F-ACC-10).
+          <span className="pill pill-accent mode-pill">{signedIn.active_mode === 'provider' ? 'Working' : 'Hiring'}</span>
         )}
+        <nav className={`nav${signedIn ? ' signed-in' : ''}`} aria-label="Main">
+          {navGroups.map((group) => <NavMenu key={group.label} group={group} />)}
+        </nav>
         <div className="topbar-right">
           {account ? (
             <Link to="/account" className="avatar" title={`${account.full_name} — account settings`}>
@@ -107,7 +112,10 @@ export function Layout() {
           </div>
         </div>
       ) : (
-        <Outlet />
+        <>
+          <Outlet />
+          {!plain && <Footer />}
+        </>
       )}
     </>
   )

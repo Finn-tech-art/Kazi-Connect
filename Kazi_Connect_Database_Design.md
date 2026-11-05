@@ -584,7 +584,16 @@ A provider's reply to a job post. Accepting a response creates a booking, so job
 | `status` | varchar(10) | `sent`, `withdrawn`, `accepted`, `declined` |
 | `created_at`, `responded_at` | timestamptz | |
 
-### 4.5 Bookings — Designed
+### 4.5 Bookings — Built in part
+
+**Built:** request, accept, decline, expiry, and cancelling before payment (Figure 5 from Requested to Accepted, Declined, Expired and Cancelled), with every change recorded in `bookings_bookingevent`. **Not yet built:** the columns and transitions from payment onwards (`commission_percent`, `provider_category`, `paid_at`, `started_at`, `delivered_at`, `released_at`, `release_due_at`, `review_closes_at`), and `job_response_id`.
+
+Differences from the design below, as built:
+
+- The price is stored as `unit_price_kes` × `quantity` = `price_kes`. `quantity` counts hours or sessions (always 1 for per-job prices), so `duration_minutes` isn't needed.
+- `client_id <> provider's account` is checked in the booking service, not as a `CHECK`, because PostgreSQL `CHECK` constraints can't read another table.
+- The deadlines come from two new `core_platformsettings` columns, `booking_response_hours` (24) and `payment_window_hours` (2).
+- **Open question:** SR-F-BKG-07 (a) lets either party cancel *before payment*, which includes a request that hasn't been answered, but Figure 5 has no Requested → Cancelled move. The build follows Figure 5 (SR-F-BKG-06), so a client can't withdraw a request; it is answered or expires. Adding the move is a one-line change once the requirement is settled. Tracked as [system evolution E-04](./system_evolution.md#e-04-a-client-cannot-withdraw-an-unanswered-booking-request).
 
 #### `bookings_booking`
 
@@ -599,7 +608,7 @@ A provider's reply to a job post. Accepting a response creates a booking, so job
 | `scheduled_start` | timestamptz | |
 | `duration_minutes`, `quantity` | integer, null | SR-F-BKG-01 |
 | `location_text`, `is_remote`, `notes` | text, boolean, text | Exact location is visible to the provider only after acceptance (SR-F-SRC-07) |
-| `price_kes`, `pricing_unit` | integer, varchar(12) | Snapshot of the listing or accepted quote (DB-8) |
+| `unit_price_kes`, `pricing_unit`, `price_kes` | integer, varchar(12), integer | Snapshot of the listing or accepted quote (DB-8); `price_kes` = unit price × `quantity` |
 | `job_rules_snapshot`, `provider_terms_snapshot` | text | What both parties accepted |
 | `client_accepted_rules_at`, `provider_accepted_rules_at` | timestamptz | BRU-13 |
 | `commission_percent`, `provider_category` | numeric(5,2), varchar(10), null | Snapshot taken **at payment** (BRU-07) |

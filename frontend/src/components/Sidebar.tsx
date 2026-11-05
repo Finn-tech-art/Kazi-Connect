@@ -9,14 +9,16 @@ type NavItem = { to: string; label: string; icon: IconName }
 // The sidebar is drawn from these lists, so adding a page means adding one line.
 const CLIENT_ITEMS: NavItem[] = [
   { to: '/dashboard', label: 'Overview', icon: 'home' },
-  { to: '/jobs/new', label: 'Post a job', icon: 'plus' },
   { to: '/find', label: 'Find services', icon: 'search' },
+  { to: '/bookings', label: 'Bookings', icon: 'calendar' },
+  { to: '/jobs/new', label: 'Post a job', icon: 'plus' },
 ]
 
 const PROVIDER_ITEMS: NavItem[] = [
   { to: '/dashboard', label: 'Overview', icon: 'home' },
-  { to: '/listings/new', label: 'New listing', icon: 'plus' },
+  { to: '/provider/bookings', label: 'Booking requests', icon: 'calendar' },
   { to: '/job-board', label: 'Job board', icon: 'board' },
+  { to: '/listings/new', label: 'New listing', icon: 'plus' },
 ]
 
 function itemsFor(account: Account): NavItem[] {

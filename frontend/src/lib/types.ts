@@ -27,6 +27,8 @@ export type Account = {
   email: string
   phone: string
   phone_verified: boolean
+  /** False while SMS codes are switched off (system evolution E-02). */
+  phone_verification_enabled: boolean
   category: AccountCategory
   status: AccountStatus
   active_mode: Mode
@@ -89,6 +91,8 @@ export type PublicListing = {
   pricing_unit: PricingUnit
   area_name: string
   radius_km: number
+  availability: string
+  provider_terms: string
   category: { name: string; slug: string; job_rules: string }
   provider: { name: string; account_category: AccountCategory; experience_level: ExperienceLevel; member_since: string }
 }
@@ -123,6 +127,45 @@ export type OpenJobPost = {
   expires_at: string
   created_at: string
   client: { first_name: string; account_category: AccountCategory; member_since: string }
+}
+
+export type BookingState =
+  | 'requested' | 'declined' | 'expired' | 'accepted' | 'cancelled' | 'paid'
+  | 'in_progress' | 'delivered' | 'disputed' | 'released' | 'refunded' | 'completed'
+export type BookingActor = 'client' | 'provider' | 'system' | 'admin'
+/** Which side of a booking the viewer is on. */
+export type BookingRole = 'client' | 'provider'
+
+export type BookingEvent = { from_state: BookingState | ''; to_state: BookingState; actor_type: BookingActor; note: string; created_at: string }
+
+export type Booking = {
+  id: number
+  reference: string
+  state: BookingState
+  state_label: string
+  listing: { id: number; title: string } | null
+  category_name: string
+  scheduled_start: string
+  quantity: number
+  pricing_unit: PricingUnit
+  unit_price_kes: number
+  price_kes: number
+  is_remote: boolean
+  location_text: string
+  location_hidden: boolean
+  notes: string
+  job_rules_snapshot: string
+  provider_terms_snapshot: string
+  response_due_at: string
+  payment_due_at: string | null
+  accepted_at: string | null
+  cancelled_at: string | null
+  cancelled_by: BookingActor | ''
+  created_at: string
+  client: { first_name: string; account_category: AccountCategory; member_since: string }
+  provider: { name: string; account_category: AccountCategory; experience_level: ExperienceLevel }
+  events: BookingEvent[]
+  actions: ('accept' | 'decline' | 'cancel')[]
 }
 
 export type Page<T> = { count: number; next: string | null; previous: string | null; results: T[] }

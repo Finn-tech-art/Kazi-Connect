@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'accounts',
     'listings',
     'jobs',
+    'bookings',
 ]
 
 MIDDLEWARE = [
@@ -161,6 +162,10 @@ DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Kazi Connect <no-reply@k
 
 # SMS - only used for phone verification codes. The console backend prints codes to the runserver terminal.
 SMS_BACKEND = env("SMS_BACKEND", default="accounts.sms.ConsoleSMSBackend")
+
+# Off until an SMS provider is chosen (system evolution E-02). While off, accounts activate once the
+# email is confirmed, and phone and payout numbers are saved without a code. Turn on to restore SR-F-ACC-03.
+PHONE_VERIFICATION_ENABLED = env.bool("PHONE_VERIFICATION_ENABLED", default=False)
 
 # Versions of the legal texts users accept. Bump a version when its text changes.
 LEGAL_DOCUMENT_VERSIONS = {

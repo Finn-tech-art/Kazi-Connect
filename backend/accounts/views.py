@@ -39,7 +39,7 @@ class MeView(APIView):
         account = request.user.account
         if account is None:
             return Response({"detail": "No Kazi Connect account yet.", "code": "no_account"}, status=status.HTTP_404_NOT_FOUND)
-        return Response(AccountSerializer(account).data)
+        return Response(AccountSerializer(services.activate_without_phone_check(account)).data)
 
     def post(self, request):
         if request.user.account is not None:
@@ -116,6 +116,17 @@ class ProviderView(APIView):
     def patch(self, request):
         data = validated(ProviderUpdateSerializer, request)
         services.update_provider_profile(request.user.account.provider_profile, **data)
+        return account_response(request.user.account)
+
+
+class PayoutPhoneView(APIView):
+    """Save the payout number without a code, while SMS verification is switched off."""
+
+    permission_classes = [HasProviderProfile]
+
+    def post(self, request):
+        data = validated(PhoneSerializer, request)
+        services.set_payout_phone(request.user.account.provider_profile, data["phone"])
         return account_response(request.user.account)
 
 

@@ -9,6 +9,8 @@ class PlatformSettings(models.Model):
     student_commission_percent = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     general_commission_percent = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     job_post_lifetime_days = models.PositiveSmallIntegerField(default=30)
+    booking_response_hours = models.PositiveSmallIntegerField(default=24, help_text="SR-F-BKG-03")
+    payment_window_hours = models.PositiveSmallIntegerField(default=2, help_text="SR-F-BKG-04")
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

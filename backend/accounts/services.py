@@ -27,12 +27,17 @@ STUDENT_LINK_LIFETIME = timedelta(hours=24)  # SR-F-VER-02
 # --- Registration -----------------------------------------------------------
 
 
+def phone_verification_enabled():
+    return settings.PHONE_VERIFICATION_ENABLED
+
+
 @transaction.atomic
 def create_account(identity, full_name, phone):
     """Create the Kazi Connect account for a Supabase user who just signed up (SR-F-ACC-01).
 
     Supabase only gives a session to users who confirmed their email, so the email
     is verified by the time we get here (requires "Confirm email" to stay on in Supabase).
+    With phone verification switched off, that is enough to activate the account.
     """
     if Account.objects.filter(email=identity.email).exists():
         raise BusinessRuleError("An account with this email already exists.", "email_taken")
@@ -44,6 +49,7 @@ def create_account(identity, full_name, phone):
         email_verified_at=timezone.now(),
         full_name=full_name.strip(),
         phone=phone,
+        status=Account.Status.PENDING_VERIFICATION if phone_verification_enabled() else Account.Status.ACTIVE,
     )
     for kind in (Consent.Kind.TERMS, Consent.Kind.PRIVACY):
         Consent.objects.create(account=account, kind=kind, version=settings.LEGAL_DOCUMENT_VERSIONS[kind])
@@ -62,8 +68,23 @@ def update_account(account, full_name=None, phone=None):
     return account
 
 
+def activate_without_phone_check(account):
+    """Activate an account left waiting for a phone code from before verification was switched off."""
+    if not phone_verification_enabled() and account.status == Account.Status.PENDING_VERIFICATION and account.email_verified_at:
+        account.status = Account.Status.ACTIVE
+        account.save(update_fields=["status", "updated_at"])
+    return account
+
+
 def _ensure_phone_is_free(phone, exclude_account=None):
-    taken = Account.objects.filter(phone=phone, phone_verified_at__isnull=False)
+    """SR-F-ACC-04: one account per number.
+
+    With verification on, only proven numbers count, so nobody can block a number by typing it.
+    With it off, nothing is proven, so the first account to enter a number keeps it.
+    """
+    taken = Account.objects.filter(phone=phone)
+    if phone_verification_enabled():
+        taken = taken.filter(phone_verified_at__isnull=False)
     if exclude_account:
         taken = taken.exclude(pk=exclude_account.pk)
     if taken.exists():
@@ -77,7 +98,13 @@ def _hash_code(phone, code):
     return salted_hmac("kazi.phone-code", f"{phone}:{code}").hexdigest()
 
 
+def _require_phone_verification():
+    if not phone_verification_enabled():
+        raise BusinessRuleError("Phone verification by SMS is switched off for now.", "phone_verification_off")
+
+
 def _send_code(account, phone, purpose):
+    _require_phone_verification()
     an_hour_ago = timezone.now() - timedelta(hours=1)
     if PhoneVerification.objects.filter(phone=phone, created_at__gte=an_hour_ago).count() >= OTP_MAX_PER_PHONE_PER_HOUR:
         raise BusinessRuleError("Too many codes were sent to this number. Try again in an hour.", "otp_rate_limited")
@@ -99,6 +126,7 @@ def _check_code(account, phone, purpose, code):
     The error is raised after the transaction commits. Raising inside it would roll back
     the attempt counter and allow unlimited guesses.
     """
+    _require_phone_verification()
     error = None
     with transaction.atomic():
         verification = (
@@ -250,7 +278,7 @@ def expire_student_statuses(now=None):
 
 CHECKLIST_LABELS = {
     "profile": "Bio and skills",
-    "payout_phone": "Verify your M-Pesa payout number",
+    "payout_phone": "Add your M-Pesa payout number",
     "category": "Choose your account category",
     "code_of_conduct": "Accept the provider code of conduct",
     "listing": "Create your first listing",
@@ -273,7 +301,7 @@ def provider_checklist(profile):
     conduct_version = settings.LEGAL_DOCUMENT_VERSIONS["code_of_conduct"]
     done = {
         "profile": bool(profile.bio.strip()) and len(profile.skills) > 0,
-        "payout_phone": profile.payout_phone_verified_at is not None,
+        "payout_phone": profile.payout_phone_verified_at is not None if phone_verification_enabled() else bool(profile.payout_phone),
         "category": profile.category_confirmed_at is not None,
         "code_of_conduct": profile.account.consents.filter(kind=Consent.Kind.CODE_OF_CONDUCT, version=conduct_version).exists(),
         "listing": profile.listings.exclude(status=Listing.Status.REMOVED).exists(),
@@ -304,6 +332,16 @@ def send_payout_phone_code(profile, phone):
     profile.payout_phone = phone
     profile.payout_phone_verified_at = None
     profile.save(update_fields=["payout_phone", "payout_phone_verified_at", "updated_at"])
+
+
+def set_payout_phone(profile, phone):
+    """Step (b) while SMS verification is off: the number is saved without a code."""
+    if phone_verification_enabled():
+        raise BusinessRuleError("Verify this number with the code we text to it.", "phone_verification_on")
+    profile.payout_phone = phone
+    profile.payout_phone_verified_at = None
+    profile.save(update_fields=["payout_phone", "payout_phone_verified_at", "updated_at"])
+    return refresh_provider_status(profile)
 
 
 def verify_payout_phone(profile, code):

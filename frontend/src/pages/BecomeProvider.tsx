@@ -28,7 +28,7 @@ export default function BecomeProvider() {
         </p>
         <ol className="plain-list card">
           <li>Write a short bio and list your skills</li>
-          <li>Verify your M-Pesa payout number</li>
+          <li>Add your M-Pesa payout number</li>
           <li>Choose Student (lower commission, MMU email) or General</li>
           <li>Accept the provider code of conduct</li>
           <li>Create your first listing</li>
@@ -125,7 +125,7 @@ function summary(step: ChecklistStep, account: Account) {
   }
   return {
     profile: `${provider.skills.length} skill(s) · bio ${provider.bio.length} characters`,
-    payout_phone: `${provider.payout_phone} verified by SMS code`,
+    payout_phone: provider.payout_phone_verified ? `${provider.payout_phone} verified by SMS code` : provider.payout_phone,
     category: account.category === 'student' ? 'Student' : 'General',
     code_of_conduct: 'Accepted',
     listing: 'Created',
@@ -155,6 +155,34 @@ function ProfileStep({ account, onSaved }: StepProps) {
 }
 
 function PayoutStep({ account, onSaved }: StepProps) {
+  return account.phone_verification_enabled
+    ? <VerifiedPayoutStep account={account} onSaved={onSaved} />
+    : <PlainPayoutStep account={account} onSaved={onSaved} />
+}
+
+/** While SMS codes are switched off (system evolution E-02): the number is saved as typed. */
+function PlainPayoutStep({ account, onSaved }: StepProps) {
+  const [phone, setPhone] = useState(account.phone)
+  const { busy, error, run } = useAction()
+
+  async function submit(event: FormEvent) {
+    event.preventDefault()
+    const updated = await run(() => api<Account>('/provider/payout-phone/', { method: 'POST', body: { phone } }))
+    if (updated) onSaved(updated)
+  }
+
+  return (
+    <form onSubmit={submit} className="stack">
+      <div className="inline-form">
+        <TextField id="payout_phone" label="M-Pesa number" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} error={error?.fields.phone ?? error?.message} />
+        <Button type="submit" busy={busy}>Save</Button>
+      </div>
+      <p className="field-hint">Check it carefully: your earnings are sent to this number.</p>
+    </form>
+  )
+}
+
+function VerifiedPayoutStep({ account, onSaved }: StepProps) {
   const [phone, setPhone] = useState(account.phone)
   const [code, setCode] = useState('')
   const [sent, setSent] = useState(false)

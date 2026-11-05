@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Alert, Pill, Spinner, useAction } from '../components/ui'
 import { api } from '../lib/api'
 import { formatDate, formatKESRange } from '../lib/format'
@@ -7,7 +8,10 @@ import type { Category, OpenJobPost, Page } from '../lib/types'
 /** Open job posts for providers (change request CR-01). */
 export default function JobBoard() {
   const [categories, setCategories] = useState<Category[]>([])
-  const [category, setCategory] = useState('')
+  // The category lives in the URL so the top bar's "Find work" links can open a filtered board.
+  const [params, setParams] = useSearchParams()
+  const category = params.get('category') ?? ''
+  const setCategory = (slug: string) => setParams(slug ? { category: slug } : {})
   const [page, setPage] = useState<Page<OpenJobPost> | null>(null)
   const { error, run } = useAction()
 

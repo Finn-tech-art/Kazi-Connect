@@ -8,15 +8,17 @@ A trusted service marketplace for MMU students and their neighbours: clients hir
 | [Kazi_Connect_SDD.md](./Kazi_Connect_SDD.md) | Architecture and technology choices |
 | [Kazi_Connect_Database_Design.md](./Kazi_Connect_Database_Design.md) | Tables, constraints, security, retention |
 | [Kazi_Connect_OOAD_Diagrams.md](./Kazi_Connect_OOAD_Diagrams.md) | Use case, class, sequence, state and activity diagrams |
+| [system_evolution.md](./system_evolution.md) | Every place the built system differs from the SRS and SDD, and why |
 
 ## What the MVP does
 
-- Sign up with email and password (Supabase Auth), confirm the email, then verify a Kenyan phone number by SMS code.
+- Sign up with email and password (Supabase Auth) and a Kenyan phone number, then confirm the email. SMS verification of the phone is built but switched off until an SMS provider is chosen ([E-02](./system_evolution.md#e-02-sms-phone-verification-is-switched-off)); set `PHONE_VERIFICATION_ENABLED=True` in `backend/.env` to turn it on.
 - Every account starts as a client. Clients can **post a job** that providers browse on a job board.
+- Clients can **request a booking** from a published listing (date, time, length, place, notes, after accepting the job rules and provider terms). The provider accepts or declines within 24 hours; either side can cancel an accepted booking before payment.
 - Clients can upgrade to a **provider** (Student or General) through a five-step checklist, then create and publish **service listings** with a price estimate and commission preview.
 - Admins (Django Admin) manage categories, prices, commission rates, accounts, listings and job posts.
 
-Not built yet: bookings, M-Pesa payments, chat, reviews, badges, disputes, location search. See the design documents for the plan.
+Not built yet: paying for a booking (M-Pesa) and everything after it (start, delivery, release), booking from a job post, chat, reviews, badges, disputes, location search. See the design documents for the plan.
 
 ## Run it locally
 
@@ -36,7 +38,9 @@ python manage.py createsuperuser  # your Django Admin login
 python manage.py runserver
 ```
 
-SMS codes and emails are printed in this terminal during development.
+Emails (and SMS codes, when phone verification is on) are printed in this terminal during development.
+
+Unanswered booking requests expire and unpaid bookings are cancelled by `python manage.py run_booking_deadlines`. In production a scheduler runs it every 5 minutes (SDD D-04). Locally you don't need it: the API applies the deadlines to your own bookings whenever you open them.
 
 ### Frontend (React on port 5173)
 

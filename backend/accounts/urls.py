@@ -10,6 +10,7 @@ urlpatterns = [
     path("me/student-verification/", views.StudentVerificationRequestView.as_view(), name="student-verification"),
     path("student-verification/confirm/", views.StudentVerificationConfirmView.as_view(), name="student-verification-confirm"),
     path("provider/", views.ProviderView.as_view(), name="provider"),
+    path("provider/payout-phone/", views.PayoutPhoneView.as_view(), name="payout-phone"),
     path("provider/payout-phone/send-code/", views.PayoutPhoneSendCodeView.as_view(), name="payout-phone-send-code"),
     path("provider/payout-phone/verify/", views.PayoutPhoneVerifyView.as_view(), name="payout-phone-verify"),
     path("provider/category/", views.ProviderCategoryView.as_view(), name="provider-category"),

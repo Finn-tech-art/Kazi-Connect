@@ -14,3 +14,5 @@ db.sqlite3
 .DS_Store
 Thumbs.db
 reference/
+frontend/public/videos_and_images/
+test.sqlite3

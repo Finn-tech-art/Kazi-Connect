@@ -2,13 +2,26 @@
 
 from django.utils import timezone
 
-from accounts.models import ProviderProfile
+from accounts.models import Account, ProviderProfile
 from accounts.services import refresh_provider_status
 from core.exceptions import BusinessRuleError
 
 from .models import CategoryPricing, Listing, PricingUnit
 
 DESCRIPTION_MIN_TO_PUBLISH = 80
+
+
+def public_listings():
+    """Published listings from active providers: what clients can browse and book."""
+    return Listing.objects.filter(
+        status=Listing.Status.PUBLISHED,
+        provider__status=ProviderProfile.Status.ACTIVE,
+        provider__account__status=Account.Status.ACTIVE,
+    )
+
+
+def is_bookable(listing):
+    return public_listings().filter(pk=listing.pk).exists()
 
 
 def pricing_for(category, unit):

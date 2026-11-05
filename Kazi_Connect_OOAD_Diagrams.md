@@ -96,7 +96,7 @@ flowchart LR
 |---|---|---|
 | Sign up and verify email | US-01, SR-F-ACC-01, 02 | Built (Supabase Auth) |
 | Sign in | SR-F-ACC-06 | Built for email and password. Sign-in with phone and the 15-minute lockout are designed. |
-| Verify phone by SMS code | SR-F-ACC-03 | Built, with a console SMS backend for development |
+| Verify phone by SMS code | SR-F-ACC-03 | Built, with a console SMS backend for development; switched off until an SMS provider is chosen ([system evolution E-02](./system_evolution.md#e-02-sms-phone-verification-is-switched-off)) |
 | Verify student email | US-05, SR-F-VER | Built; yearly expiry job designed |
 | Switch mode | US-03, SR-F-ACC-10 | Built |
 | Browse service listings | US-10, 11 | Built as a category list; location search and map designed |
@@ -914,7 +914,7 @@ stateDiagram-v2
     Filled --> [*]
 ```
 
-### 7.5 Booking (Designed, from SRS Figure 5)
+### 7.5 Booking (from SRS Figure 5; built up to Accepted, Declined, Expired and Cancelled before payment)
 
 ```mermaid
 stateDiagram-v2

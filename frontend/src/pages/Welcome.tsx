@@ -8,6 +8,7 @@ import type { Account } from '../lib/types'
 /**
  * Finishes registration after Supabase sign-up (US-01):
  * 1. create the Kazi Connect account and record consent, 2. verify the phone by SMS code.
+ * While SMS codes are switched off (system evolution E-02) the account is active after step 1.
  */
 export default function Welcome() {
   const { account, session } = useAuth()
@@ -16,7 +17,7 @@ export default function Welcome() {
   if (account?.status === 'active') return <Navigate to={intent === 'work' ? '/become-provider' : '/dashboard'} replace />
   return (
     <main className="page narrow">
-      <p className="eyebrow">Step {account ? 2 : 1} of 2</p>
+      <p className="eyebrow">{account ? 'Last step' : 'Finish signing up'}</p>
       {account ? <PhoneStep account={account} /> : <ProfileStep />}
     </main>
   )
@@ -40,8 +41,10 @@ function ProfileStep() {
       }),
     )
     if (!account) return
-    // If this first SMS fails, the next step has a "Send a new code" button.
-    await api('/me/phone/send-code/', { method: 'POST' }).catch(() => undefined)
+    if (account.phone_verification_enabled) {
+      // If this first SMS fails, the next step has a "Send a new code" button.
+      await api('/me/phone/send-code/', { method: 'POST' }).catch(() => undefined)
+    }
     setAccount(account)
   }
 
@@ -53,7 +56,7 @@ function ProfileStep() {
         <TextField id="full_name" label="Full name" value={fullName} onChange={(e) => setFullName(e.target.value)} error={error?.fields.full_name} />
         <TextField
           id="phone" label="Phone number (M-Pesa)" type="tel" placeholder="0712 345 678" value={phone}
-          onChange={(e) => setPhone(e.target.value)} error={error?.fields.phone} hint="We'll text a 6-digit code to this number."
+          onChange={(e) => setPhone(e.target.value)} error={error?.fields.phone} hint="Your Safaricom M-Pesa number. Other users never see it."
         />
         <Checkbox
           id="accept_terms" checked={acceptTerms} onChange={(e) => setAcceptTerms(e.target.checked)} error={error?.fields.accept_terms}

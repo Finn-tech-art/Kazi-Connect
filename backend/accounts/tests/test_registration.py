@@ -1,5 +1,7 @@
 from unittest import mock
 
+from django.test import override_settings
+
 from accounts import services
 from accounts.models import Account, Consent, PhoneVerification
 from accounts.phone import normalize_kenyan_mobile
@@ -17,6 +19,7 @@ class PhoneNumberTests(KaziAPITestCase):
             self.assertIsNone(normalize_kenyan_mobile(raw))
 
 
+@override_settings(PHONE_VERIFICATION_ENABLED=True)  # the SMS flow, kept for when an SMS provider is chosen
 @mock.patch("accounts.services.send_sms")
 class RegistrationTests(KaziAPITestCase):
     def register(self, **overrides):
@@ -89,3 +92,47 @@ class RegistrationTests(KaziAPITestCase):
         response = self.client.get("/api/job-posts/mine/")
         self.assertEqual(response.status_code, 403)
         self.assertIn("Verify your phone", response.data["detail"])
+
+
+@override_settings(PHONE_VERIFICATION_ENABLED=False)
+@mock.patch("accounts.services.send_sms")
+class PhoneVerificationOffTests(KaziAPITestCase):
+    """System evolution E-02: no SMS provider yet, so the confirmed email is enough to activate."""
+
+    def register(self, phone="0712 345 678"):
+        data = {"full_name": "Amina Otieno", "phone": phone, "accept_terms": True, "accept_privacy": True}
+        return self.client.post("/api/me/", data, format="json")
+
+    def test_account_is_active_straight_after_registering(self, send_sms):
+        self.sign_in()
+        response = self.register()
+        self.assertEqual(response.data["status"], "active")
+        self.assertFalse(response.data["phone_verified"])
+        self.assertFalse(response.data["phone_verification_enabled"])
+        send_sms.assert_not_called()
+
+    def test_sms_endpoints_are_refused(self, send_sms):
+        self.create_account(active=False)
+        response = self.client.post("/api/me/phone/send-code/")
+        self.assertEqual(response.data["code"], "phone_verification_off")
+        send_sms.assert_not_called()
+
+    def test_accounts_left_waiting_for_a_code_are_activated(self, send_sms):
+        account = self.create_account(active=False)
+        self.assertEqual(self.client.get("/api/me/").data["status"], "active")
+        account.refresh_from_db()
+        self.assertEqual(account.status, Account.Status.ACTIVE)
+
+    def test_a_number_already_entered_by_another_account_is_refused(self, send_sms):
+        self.create_account(email="baraka@example.com", phone="+254712345678", active=False)
+        self.sign_in(email="amina@example.com")
+        self.assertEqual(self.register().data["code"], "phone_taken")
+
+    def test_payout_number_is_saved_without_a_code(self, send_sms):
+        self.create_account()
+        self.client.post("/api/provider/")
+        self.assertEqual(self.client.post("/api/provider/payout-phone/send-code/", {"phone": "0712345678"}).data["code"], "phone_verification_off")
+        response = self.client.post("/api/provider/payout-phone/", {"phone": "0712345678"})
+        steps = {step["key"]: step["done"] for step in response.data["provider"]["checklist"]}
+        self.assertTrue(steps["payout_phone"])
+        self.assertFalse(response.data["provider"]["payout_phone_verified"])

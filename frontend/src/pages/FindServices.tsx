@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Alert, Pill, Spinner, useAction } from '../components/ui'
 import { api } from '../lib/api'
 import { formatKES, LEVEL_LABELS, UNIT_LABELS } from '../lib/format'
@@ -48,7 +48,10 @@ export default function FindServices() {
               <h3>{listing.title}</h3>
               <p>{listing.description}</p>
               <p className="muted">{listing.category.name} · {listing.area_name} · travels up to {listing.radius_km} km</p>
-              <p className="preview-price"><span>From</span> <b className="mono">{formatKES(listing.price)}</b> <small>{UNIT_LABELS[listing.pricing_unit]}</small></p>
+              <div className="row-title">
+                <p className="preview-price"><span>From</span> <b className="mono">{formatKES(listing.price)}</b> <small>{UNIT_LABELS[listing.pricing_unit]}</small></p>
+                <Link to={`/book/${listing.id}`} className="btn btn-secondary">Request booking</Link>
+              </div>
             </article>
           ))}
         </div>

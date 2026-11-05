@@ -8,7 +8,7 @@ export function RequireSession({ children }: { children: ReactNode }) {
   const { loading, session } = useAuth()
   const location = useLocation()
   if (loading) return <Spinner />
-  if (!session) return <Navigate to="/signin" replace state={{ from: location.pathname }} />
+  if (!session) return <Navigate to="/signin" replace state={{ from: location.pathname + location.search }} />
   return children
 }
 
@@ -17,7 +17,7 @@ export function RequireActiveAccount({ children }: { children: ReactNode }) {
   const { loading, session, account } = useAuth()
   const location = useLocation()
   if (loading) return <Spinner />
-  if (!session) return <Navigate to="/signin" replace state={{ from: location.pathname }} />
+  if (!session) return <Navigate to="/signin" replace state={{ from: location.pathname + location.search }} />
   if (!account || account.status === 'pending_verification') return <Navigate to="/welcome" replace />
   if (account.status !== 'active') {
     return (
