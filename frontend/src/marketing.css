@@ -44,14 +44,8 @@
 /* Logo row under the hero */
 .mk-brands { padding: 40px 0 8px; }
 .mk-brands-row { display: flex; justify-content: center; align-items: center; gap: clamp(24px, 6vw, 72px); margin-top: 24px; }
-.mk-brands figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 0 1 auto; min-width: 0; }
-.mk-brands figure + figure { padding-left: clamp(24px, 6vw, 72px); border-left: 1px solid var(--border); }
-.mk-brands figcaption { color: var(--text-muted); font-size: 12px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; }
-.mk-brands img { display: block; }
-.mk-brands figcaption, .mk-brand-kazi > span { white-space: nowrap; }
-.mk-brand-kazi { height: 64px; font-size: 26px; gap: 10px; }
-.mk-brand-mmu { height: 64px; width: auto; }
-.mk-brand-mpesa { height: 64px; width: auto; }
+.mk-brands-row img { display: block; width: auto; height: 64px; flex: 0 0 auto; }
+.mk-brands-row img + img { padding-left: clamp(24px, 6vw, 72px); border-left: 1px solid var(--border); box-sizing: content-box; }
 
 .mk-section { padding: clamp(56px, 8vw, 96px) 0 0; }
 .mk-section-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
@@ -198,13 +192,9 @@
   .mk-hero { min-height: 560px; }
   .mk-hero-shade { background: linear-gradient(0deg, rgb(18 18 20 / 0.92) 10%, rgb(18 18 20 / 0.45) 70%, rgb(18 18 20 / 0.25)); }
   .mk-hero .actions .btn { flex: 1 1 100%; }
-  .mk-brands-row { gap: 12px; }
-  .mk-brands figure + figure { padding-left: 12px; }
-  .mk-brand-kazi { height: 40px; font-size: 15px; gap: 5px; }
-  .mk-brand-kazi img { width: 24px; height: 24px; }
-  .mk-brand-mmu { height: 40px; }
-  .mk-brand-mpesa { height: 34px; margin: 3px 0; }
-  .mk-brands figcaption { font-size: 10px; }
+  .mk-brands-row { gap: 20px; }
+  .mk-brands-row img { height: 44px; }
+  .mk-brands-row img + img { padding-left: 20px; }
   .mk-tabs { justify-content: flex-start; }
   .mk-tabs button { padding: 8px 12px 14px; }
   .mk-photo-stack { min-height: 300px; }

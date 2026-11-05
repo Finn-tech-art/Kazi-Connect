@@ -66,18 +66,9 @@ export default function Landing() {
       <section className="mk-brands" aria-label="Kazi Connect, launching with Multimedia University of Kenya, payments by M-Pesa">
         <p className="mk-kicker">Launching with the Multimedia University of Kenya community</p>
         <div className="mk-brands-row">
-          <figure>
-            <span className="logo mk-brand-kazi"><img src="/kazi-mark.svg" alt="" width={40} height={40} /><span>kazi <b>connect</b></span></span>
-            <figcaption>Marketplace</figcaption>
-          </figure>
-          <figure>
-            <img src="/brand/mmu.png" alt="Multimedia University of Kenya" className="mk-brand-mmu" />
-            <figcaption>Campus</figcaption>
-          </figure>
-          <figure>
-            <img src="/brand/mpesa.svg" alt="M-Pesa" className="mk-brand-mpesa" />
-            <figcaption>Payments</figcaption>
-          </figure>
+          <img src="/kazi-mark.svg" alt="Kazi Connect" />
+          <img src="/brand/mmu.png" alt="Multimedia University of Kenya" />
+          <img src="/brand/mpesa.svg" alt="M-Pesa" />
         </div>
       </section>
 
