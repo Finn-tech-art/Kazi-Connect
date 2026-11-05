@@ -505,3 +505,8 @@ details.card ul { margin-top: 12px; }
 }
 .password-toggle:hover { color: var(--text); background: var(--bg-elevated); }
 .password-toggle[aria-pressed='true'] { color: var(--accent-ink); }
+
+/* Small print under a form, e.g. the terms note on sign-up */
+.legal-note { margin-top: 16px; text-align: center; color: var(--text-muted); font-size: 12px; line-height: 18px; }
+.legal-note a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; }
+.legal-note a:hover { color: var(--accent-ink); }

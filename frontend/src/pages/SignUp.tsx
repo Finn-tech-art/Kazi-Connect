@@ -96,6 +96,10 @@ export default function SignUp() {
           Already have an account? <Link to="/signin">Sign in</Link>
         </p>
       </form>
+      <p className="legal-note">
+        By continuing, you confirm that you have read and accepted our <Link to="/privacy">Privacy Policy</Link> and{' '}
+        <Link to="/terms">Terms of Service</Link>.
+      </p>
     </main>
   )
 }
