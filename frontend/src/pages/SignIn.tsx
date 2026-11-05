@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
-import { Alert, Button, TextField } from '../components/ui'
+import { Alert, Button, PasswordField, TextField } from '../components/ui'
 import { supabase } from '../lib/supabase'
 
 export default function SignIn() {
@@ -30,7 +30,7 @@ export default function SignIn() {
       <h1>Sign in</h1>
       <form onSubmit={submit} className="stack card">
         <TextField id="email" label="Email" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-        <TextField id="password" label="Password" type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+        <PasswordField id="password" label="Password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
         {error && <Alert tone="error">{error}</Alert>}
         <Button type="submit" busy={busy}>Sign in</Button>
         <p className="muted center">

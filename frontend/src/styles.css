@@ -488,3 +488,15 @@ details.card ul { margin-top: 12px; }
 /* The phone drawer slides over page text, so it needs a more solid glass to stay readable. */
 @media (max-width: 699.98px) { .sidebar { background: var(--glass-bg-strong); } }
 .nav-empty { padding: 10px 12px; color: var(--text-muted); font-size: 13px; }
+
+/* Password field with show/hide button */
+.password-input { position: relative; }
+.password-input input { padding-right: 48px; }
+.password-toggle {
+  position: absolute; top: 50%; right: 6px; transform: translateY(-50%);
+  display: inline-grid; place-items: center; width: 36px; height: 36px; padding: 0;
+  border: 0; border-radius: var(--radius-pill); background: none; color: var(--text-muted); cursor: pointer;
+  transition: color 0.15s, background-color 0.15s;
+}
+.password-toggle:hover { color: var(--text); background: var(--bg-elevated); }
+.password-toggle[aria-pressed='true'] { color: var(--accent-ink); }

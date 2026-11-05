@@ -1,5 +1,6 @@
 import { useState, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from 'react'
 import { ApiError } from '../lib/api'
+import { Icon } from './icons'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'ghost'; busy?: boolean }
 
@@ -27,6 +28,31 @@ export function TextField({ label, error, hint, id, ...rest }: FieldShell & Inpu
   return (
     <Shell label={label} error={error} hint={hint} id={id}>
       <input id={id} aria-invalid={Boolean(error)} aria-describedby={error ? `${id}-error` : undefined} {...rest} />
+    </Shell>
+  )
+}
+
+/** A password input with an eye button that shows or hides what's been typed. */
+export function PasswordField({ label, error, hint, id, ...rest }: FieldShell & Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>) {
+  const [visible, setVisible] = useState(false)
+  return (
+    <Shell label={label} error={error} hint={hint} id={id}>
+      <div className="password-input">
+        <input
+          id={id} type={visible ? 'text' : 'password'}
+          aria-invalid={Boolean(error)} aria-describedby={error ? `${id}-error` : undefined} {...rest}
+        />
+        <button
+          type="button"
+          className="password-toggle"
+          onClick={() => setVisible((current) => !current)}
+          aria-label={visible ? 'Hide password' : 'Show password'}
+          aria-pressed={visible}
+          aria-controls={id}
+        >
+          <Icon name={visible ? 'eyeOff' : 'eye'} size={18} />
+        </button>
+      </div>
     </Shell>
   )
 }

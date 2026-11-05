@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
-import { Alert, Button, TextField } from '../components/ui'
+import { Alert, Button, PasswordField, TextField } from '../components/ui'
 import { supabase } from '../lib/supabase'
 
 export type SignUpIntent = 'hire' | 'work'
@@ -85,8 +85,8 @@ export default function SignUp() {
           id="phone" label="Phone number (M-Pesa)" type="tel" autoComplete="tel" placeholder="0712 345 678" required
           value={form.phone} onChange={update('phone')} hint="We'll text you a 6-digit code to confirm it."
         />
-        <TextField
-          id="password" label="Password" type="password" autoComplete="new-password" required
+        <PasswordField
+          id="password" label="Password" autoComplete="new-password" required
           value={form.password} onChange={update('password')} error={errors.password}
           hint="At least 8 characters, with letters and numbers."
         />
