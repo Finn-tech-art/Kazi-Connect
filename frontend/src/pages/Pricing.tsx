@@ -7,7 +7,7 @@ export default function Pricing() {
       <PageHead
         eyebrow="Pricing and fees"
         title="Free to join. We earn only when a job is paid."
-        lead="Kazi Connect keeps a commission on each paid job and charges an optional fee for the verified badge. That's it."
+        lead="Kazi Connect charges two fees: a commission on each paid job, and an optional fee for the verified badge."
       />
 
       <div className="mk-plans">

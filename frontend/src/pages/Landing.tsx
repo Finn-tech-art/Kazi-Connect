@@ -9,11 +9,11 @@ import { CATEGORY_MEDIA, FALLBACK_CATEGORIES, FALLBACK_MEDIA, FAQ, STEPS, type S
 const HERO: Record<Side, { title: string; lead: string }> = {
   hire: {
     title: 'Hire verified students. Pay only when the job is done.',
-    lead: 'Tutors, cleaners, photographers and designers near MMU. Your M-Pesa payment is held by Kazi Connect until you confirm the work is done.',
+    lead: 'Tutors, cleaners, photographers and designers near MMU. Kazi Connect holds your M-Pesa payment until you confirm the work is done.',
   },
   work: {
-    title: 'Turn your skills into income, on your schedule.',
-    lead: 'Offer your services to clients near campus, set your own prices, and get paid to M-Pesa once the job is confirmed. Students pay a lower commission.',
+    title: 'Offer your services to clients near campus.',
+    lead: 'Set your own prices, take the jobs that fit your timetable, and get paid to M-Pesa when each job is confirmed. Verified MMU students pay a lower commission.',
   },
 }
 
@@ -74,7 +74,7 @@ export default function Landing() {
 
       {/* Categories */}
       <section className="mk-section">
-        <h2 className="mk-title center">Find help for every kind of job</h2>
+        <h2 className="mk-title center">Browse services by category</h2>
         <div className="mk-tabs" role="tablist" aria-label="Service categories">
           {categories.map((c) => (
             <button
@@ -123,14 +123,14 @@ export default function Landing() {
             </article>
           ))}
         </div>
-        <p className="center"><Link to="/how-it-works" className="mk-more">The full booking journey <Icon name="arrow" size={16} /></Link></p>
+        <p className="center"><Link to="/how-it-works" className="mk-more">Every step of a booking <Icon name="arrow" size={16} /></Link></p>
       </section>
 
       {/* Product demo */}
       <section className="mk-split mk-band">
         <div className="mk-split-text">
-          <p className="eyebrow">See it in action</p>
-          <h2 className="mk-title">From request to "sent" in under a minute</h2>
+          <p className="eyebrow">Booking</p>
+          <h2 className="mk-title">Send a booking request in under a minute</h2>
           <p className="muted mk-body">
             Pick a listing, choose a time, accept the job rules and send. The provider has 24 hours to answer, and
             nothing is charged until they accept.
@@ -149,8 +149,8 @@ export default function Landing() {
 
       {/* Trust */}
       <section className="mk-section">
-        <h2 className="mk-title center">Trust is built in, not bolted on</h2>
-        <p className="lead center mk-center-lead">Three things informal groups and referrals can't give you.</p>
+        <h2 className="mk-title center">Why book through Kazi Connect</h2>
+        <p className="lead center mk-center-lead">A WhatsApp group or a friend's referral can't check who someone is, hold your money, or show you their past work.</p>
         <div className="mk-trust">
           <div className="mk-trust-card">
             <span className="mk-icon"><Icon name="user" /></span>
@@ -164,15 +164,15 @@ export default function Landing() {
           </div>
           <div className="mk-trust-card">
             <span className="mk-icon"><Icon name="star" /></span>
-            <h3>Real reputation</h3>
+            <h3>Reviews from real jobs</h3>
             <p className="muted">Only paid, completed jobs can be reviewed, and by both sides. Ratings and job counts set each provider's experience level.</p>
           </div>
         </div>
         <div className="mk-showcase">
           <AutoVideo src="/showcase/showcase-5s.mp4" poster="/showcase/showcase-5s-poster.jpg" label="Kazi Connect on a phone" />
           <div>
-            <h3 className="mk-subtitle">Works on the phone you already have</h3>
-            <p className="muted mk-body">Kazi Connect runs in your mobile browser. No app to install: sign up, book and get paid from any smartphone with M-Pesa.</p>
+            <h3 className="mk-subtitle">Runs in your phone's browser</h3>
+            <p className="muted mk-body">There is no app to install. You can sign up, book and get paid from any smartphone with M-Pesa.</p>
             <Link to="/safety" className="mk-more">Read about trust and safety <Icon name="arrow" size={16} /></Link>
           </div>
         </div>
@@ -185,11 +185,11 @@ export default function Landing() {
           <img src="/media/online-meeting.jpg" alt="A provider meeting a client online" loading="lazy" />
         </div>
         <div className="mk-split-text">
-          <p className="eyebrow">For students with skills</p>
-          <h2 className="mk-title">Build a reputation that follows you</h2>
+          <p className="eyebrow">For providers</p>
+          <h2 className="mk-title">Keep a record of your work</h2>
           <p className="muted mk-body">
-            Group chats and referrals don't keep a record of your good work. Kazi Connect does, with reviews from every
-            completed job and an experience level that grows with you.
+            Each completed job adds a review to your profile. As your job count and rating grow, your experience level
+            moves from Entry to Intermediate to Experienced.
           </p>
           <CheckList>{[
             'Lower commission for verified MMU students',
@@ -203,8 +203,8 @@ export default function Landing() {
 
       {/* Pricing teaser */}
       <section className="mk-section">
-        <h2 className="mk-title center">Simple, honest pricing</h2>
-        <p className="lead center mk-center-lead">No subscriptions. Kazi Connect earns only when a job is paid.</p>
+        <h2 className="mk-title center">Pricing</h2>
+        <p className="lead center mk-center-lead">No subscriptions. Kazi Connect takes a commission only when a job is paid.</p>
         <div className="mk-plans">
           <div className="mk-plan">
             <h3>Hiring</h3>
@@ -214,7 +214,7 @@ export default function Landing() {
               'Pay only the job price you agreed',
               'Payment held until you confirm the work',
               'Free cancellation before you pay',
-              'Disputes decided by a person, not a bot',
+              'Disputes reviewed by a Kazi Connect admin',
             ]}</CheckList>
             <Link to={hireLink} className="btn btn-secondary">Start hiring</Link>
           </div>
@@ -225,9 +225,9 @@ export default function Landing() {
             <p className="mk-plan-price">Free <small>to list, commission per paid job</small></p>
             <CheckList>{[
               'Student accounts pay a lower commission',
-              'Commission rounds down, so you keep the odd shilling',
-              'Optional verified badge to rank higher',
-              'Job board with open requests near you',
+              'Commission is rounded down to the whole shilling',
+              'Optional verified badge, which ranks you higher in search',
+              'A job board of open requests near you',
             ]}</CheckList>
             <Link to={workLink} className="btn btn-primary">Start earning</Link>
           </div>
@@ -238,8 +238,8 @@ export default function Landing() {
       {/* FAQ */}
       <section className="mk-section mk-faq-section">
         <div>
-          <h2 className="mk-title">Questions, answered</h2>
-          <p className="muted mk-body">Can't find what you need? <Link to="/help">Visit the help centre</Link> or <Link to="/contact">contact us</Link>.</p>
+          <h2 className="mk-title">Frequently asked questions</h2>
+          <p className="muted mk-body">For anything else, see the <Link to="/help">help centre</Link> or <Link to="/contact">contact us</Link>.</p>
         </div>
         <FaqList items={[FAQ[1].items[0], FAQ[1].items[1], FAQ[2].items[0], FAQ[3].items[0], FAQ[3].items[3]]} />
       </section>
@@ -249,8 +249,8 @@ export default function Landing() {
         <AutoVideo src="/media/cta-call.mp4" poster="/media/cta-call.jpg" className="mk-hero-media" />
         <div className="mk-hero-shade" />
         <div className="mk-cta-body">
-          <h2>Get it done by someone you can trust</h2>
-          <p>Join the MMU community on Kazi Connect, to hire or to work.</p>
+          <h2>Hire or work on Kazi Connect</h2>
+          <p>Free to join for clients near MMU, students and local providers.</p>
           <div className="actions">
             <Link to={hireLink} className="btn btn-primary btn-lg">Post a job</Link>
             <Link to={workLink} className="btn btn-glass btn-lg">Offer your services</Link>

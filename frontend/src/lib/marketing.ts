@@ -34,9 +34,9 @@ export type Step = { title: string; body: string; media: string; tone?: 'phone' 
 
 export const STEPS: Record<Side, Step[]> = {
   hire: [
-    { title: 'Find someone near campus', body: 'Browse verified students and local pros by category, or post a job for free and let providers come to you.', media: '/showcase/phone-find-services.png', tone: 'phone' },
+    { title: 'Find someone near campus', body: 'Browse verified students and local pros by category, or post a job for free and let providers find it on the job board.', media: '/showcase/phone-find-services.png', tone: 'phone' },
     { title: 'Book with clear rules', body: "Pick a time and place. You and the provider both accept the category's job rules before anything is confirmed.", media: '/showcase/phone-request-booking.png', tone: 'phone' },
-    { title: 'Pay when the work is done', body: 'Pay by M-Pesa after the provider accepts. We hold the money and release it only when you confirm the job is done.', media: '/showcase/phone-booking-accepted.png', tone: 'phone' },
+    { title: 'Pay when the work is done', body: 'Pay by M-Pesa once the provider accepts. We hold the money and release it when you confirm the job is done.', media: '/showcase/phone-booking-accepted.png', tone: 'phone' },
   ],
   work: [
     { title: 'Verify and set up', body: 'Confirm your email and phone, add an M-Pesa payout number, and verify your MMU student email for the lower Student commission.', media: '/showcase/phone-provider-setup.png', tone: 'phone' },

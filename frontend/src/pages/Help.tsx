@@ -32,7 +32,7 @@ export default function Help() {
       )}
 
       <div className="info-cta">
-        <h2>Still stuck?</h2>
+        <h2>Need more help?</h2>
         <p className="muted">Email us with your booking reference and we'll look into it.</p>
         <div className="actions">
           <Link to="/contact" className="btn btn-primary">Contact us</Link>

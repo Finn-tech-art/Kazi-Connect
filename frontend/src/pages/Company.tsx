@@ -6,7 +6,7 @@ export function About() {
   return (
     <main className="page narrow stack">
       <p className="eyebrow">About us</p>
-      <h1>Work for students, by students</h1>
+      <h1>A local services marketplace for the MMU community</h1>
       <p className="lead">
         Kazi Connect links people near MMU with students and local providers who can tutor, clean, photograph and
         design. We started it because finding someone you can trust for a small job shouldn't depend on who you know.
@@ -50,7 +50,7 @@ export function Contact() {
   return (
     <main className="page narrow stack">
       <p className="eyebrow">Contact us</p>
-      <h1>We're here to help</h1>
+      <h1>Contact the Kazi Connect team</h1>
       <p className="lead">
         Questions about a booking, a payment or your account? Email us and we'll get back to you.
       </p>

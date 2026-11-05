@@ -107,7 +107,7 @@ export default function BecomeProvider() {
           )
         })}
       </ol>
-      <p className="muted">Profile photos arrive with file uploads; you won't need one for now.</p>
+      <p className="muted">Profile photos are not required yet.</p>
     </main>
   )
 }
@@ -293,7 +293,7 @@ function ConductStep({ onSaved }: StepProps) {
         <li>Keep payment on Kazi Connect so both sides stay protected.</li>
         <li>Treat clients with respect and keep their information private.</li>
       </ul>
-      <p className="field-hint">Draft summary. The full code of conduct is published before the pilot (BR-NF-05).</p>
+      <p className="field-hint">This is a summary. The full code of conduct will be published before the pilot.</p>
       {error && <Alert tone="error">{error.message}</Alert>}
       <Button busy={busy} onClick={async () => {
         const updated = await run(() => api<Account>('/provider/code-of-conduct/', { method: 'POST' }))

@@ -13,7 +13,7 @@ export default function Safety() {
     <main className="page info">
       <PageHead
         eyebrow="Trust and safety"
-        title="Your safety comes first"
+        title="Staying safe on Kazi Connect"
         lead="How Kazi Connect keeps clients and providers safe, and what to do if something goes wrong."
       />
 
@@ -53,7 +53,7 @@ export default function Safety() {
       <section className="info-section grid-2 info-grid">
         <div>
           <h2 className="mk-title">Safety tips</h2>
-          <p className="muted mk-body">Simple habits that keep every job safe.</p>
+          <p className="muted mk-body">Precautions for both sides of a booking.</p>
         </div>
         <div className="grid-2 tight">
           <div className="card">
@@ -71,7 +71,7 @@ export default function Safety() {
               'Only start once the booking shows as paid',
               'Tell a friend where you are going and when',
               'Meet in shared areas of a home or in public places',
-              "Leave if you feel unsafe. Your safety matters more than the job",
+              'If you feel unsafe, leave and report it to us',
             ]}</CheckList>
           </div>
         </div>

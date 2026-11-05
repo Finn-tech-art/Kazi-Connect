@@ -28,7 +28,7 @@ export default function JobBoard() {
     <main className="page">
       <p className="eyebrow">Working mode</p>
       <h1>Job board</h1>
-      <p className="lead">Open requests from clients. Replying to a job arrives with in-app chat, the next milestone.</p>
+      <p className="lead">Open requests from clients. You will be able to reply to a job once in-app messaging launches.</p>
 
       <div className="chips" role="group" aria-label="Filter by category">
         <button type="button" className={category === '' ? 'on' : ''} onClick={() => setCategory('')}>All</button>

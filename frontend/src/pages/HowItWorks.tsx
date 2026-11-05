@@ -48,8 +48,8 @@ export default function HowItWorks() {
     <main className="page info">
       <PageHead
         eyebrow="How it works"
-        title="From first search to final review"
-        lead="Every booking follows the same steps, so both sides always know what happens next and by when."
+        title="How a booking works"
+        lead="Every booking follows the same steps and time limits, so both sides know what happens next and when."
       >
         <SideToggle side={side} onChange={setSide} />
       </PageHead>
@@ -74,7 +74,7 @@ export default function HowItWorks() {
       <section className="info-section grid-2 info-grid">
         <div>
           <h2 className="mk-title">Time limits</h2>
-          <p className="muted mk-body">Timers keep bookings moving. Admins may adjust some of them; the current values are shown here.</p>
+          <p className="muted mk-body">Each stage has a deadline. Admins can change some of them; the table shows the current values.</p>
         </div>
         <table className="info-table">
           <tbody>{TIMINGS.map(([what, when]) => <tr key={what}><th scope="row">{what}</th><td>{when}</td></tr>)}</tbody>
@@ -82,7 +82,7 @@ export default function HowItWorks() {
       </section>
 
       <div className="info-cta">
-        <h2>Ready to start?</h2>
+        <h2>Create a free account</h2>
         <div className="actions">
           <Link to="/signup?intent=hire" className="btn btn-primary">Hire someone</Link>
           <Link to="/signup?intent=work" className="btn btn-secondary">Offer your services</Link>

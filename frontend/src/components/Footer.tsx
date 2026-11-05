@@ -31,7 +31,7 @@ export function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} Kazi Connect · Built by students for students</span>
+        <span>© {new Date().getFullYear()} Kazi Connect</span>
         <nav className="footer-legal" aria-label="Legal">
           <Link to="/privacy">Privacy</Link>
           <Link to="/terms">Terms</Link>
