@@ -8,7 +8,7 @@ import { CATEGORY_MEDIA, FALLBACK_CATEGORIES, FALLBACK_MEDIA, FAQ, STEPS, type S
 
 const HERO: Record<Side, { title: string; lead: string }> = {
   hire: {
-    title: 'Hire verified students. Pay only when the job is done.',
+    title: 'Hire verified students. Get the job done.',
     lead: 'Tutors, cleaners, photographers and designers near MMU. Your M-Pesa payment is held in escrow and released only once you confirm the work is complete.',
   },
   work: {
