@@ -21,7 +21,7 @@
   --error-ink: #a3172c;
   --error-subtle: #fde8eb;
   --line-art: #121214;      /* background lines, drawn at low opacity */
-  --line-opacity: 0.07;
+  --line-opacity: 0.1;
   --topbar-bg: rgb(250 250 247 / 0.82);
   --shadow-pop: 0 18px 40px rgb(18 18 20 / 0.12), 0 2px 6px rgb(18 18 20 / 0.06);
   /* Glass: translucent surfaces that blur the line art behind them */
@@ -419,17 +419,22 @@ details.card ul { margin-top: 12px; }
 @media (max-width: 899.98px) { .footer-inner { grid-template-columns: repeat(4, 1fr); } .footer-brand { grid-column: 1 / -1; } }
 @media (max-width: 560px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px 24px; padding: 64px var(--gutter) 48px; } }
 
-/* Decorative background lines (components/BackgroundLines.tsx). Fixed behind everything; cards cover them. */
-.bg-lines {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none; color: var(--line-art);
-  /* Strongest at the top, fading out further down where most text sits. */
-  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 0%, rgb(0 0 0 / 0.55) 55%, transparent 100%);
-  mask-image: radial-gradient(120% 90% at 50% 0%, #000 0%, rgb(0 0 0 / 0.55) 55%, transparent 100%);
+/* Decorative background lines (components/BackgroundLines.tsx): two corner pieces, the middle stays clear. */
+.bg-lines { position: fixed; inset: 0; z-index: -1; pointer-events: none; color: var(--line-art); overflow: hidden; }
+.bg-corner { position: absolute; width: clamp(240px, 36vw, 560px); height: auto; aspect-ratio: 1; }
+/* Each piece fades out from its own corner toward the centre of the window. */
+.bg-corner.tr {
+  top: 0; right: 0;
+  -webkit-mask-image: radial-gradient(circle at 100% 0%, #000 35%, transparent 72%);
+  mask-image: radial-gradient(circle at 100% 0%, #000 35%, transparent 72%);
 }
-.bg-lines svg { width: 100%; height: 100%; }
+.bg-corner.bl {
+  bottom: 0; left: 0;
+  -webkit-mask-image: radial-gradient(circle at 0% 100%, #000 35%, transparent 72%);
+  mask-image: radial-gradient(circle at 0% 100%, #000 35%, transparent 72%);
+}
 .bg-lines .lines { opacity: var(--line-opacity); }
-.bg-lines .accent-line { stroke: var(--accent); opacity: 0.45; }
-.bg-lines .glow { fill: var(--accent); opacity: 0.08; }
+.bg-lines .accent-line { stroke: var(--accent); opacity: 0.5; }
 
 /* ------------------------------------------------------------------
    Glass surfaces. Later rules here override the plain ones above.
