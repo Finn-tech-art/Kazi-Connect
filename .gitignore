@@ -16,3 +16,4 @@ Thumbs.db
 reference/
 frontend/public/videos_and_images/
 test.sqlite3
+staticfiles/
